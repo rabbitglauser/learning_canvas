@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waze Animation</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #e0f7fa;
+    }
+
+    .map {
+      position: relative;
+      width: 80vw;
+      height: 60vh;
+      background: url('https://i.imgur.com/d4Rhoas.png') no-repeat center center;
+      background-size: cover;
+      overflow: hidden;
+      border: 2px solid #00796b;
+      border-radius: 15px;
+    }
+
+    .car {
+      width: 50px;
+      height: 30px;
+      background-color: #ff5722;
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      border-radius: 5px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s;
+    }
+  </style>
+</head>
+<body>
+<div class="map">
+  <div class="car"></div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    const path = [
+      { left: '10%', bottom: '10%' },
+      { left: '30%', bottom: '20%' },
+      { left: '50%', bottom: '15%' },
+      { left: '70%', bottom: '30%' },
+      { left: '90%', bottom: '20%' },
+      { left: '100%', bottom: '10%' }
+    ];
+
+    let index = 0;
+
+    function moveCar() {
+      if (index < path.length) {
+        $('.car').animate(path[index], 1000, function() {
+          // Add a slight rotation effect to the car
+          $(this).css('transform', 'rotate(10deg)');
+          setTimeout(() => {
+            $(this).css('transform', 'rotate(-10deg)');
+          }, 300);
+          index++;
+          moveCar();
+        });
+      } else {
+        index = 0; // Reset to start
+        moveCar(); // Start again
+      }
+    }
+
+    moveCar();
+  });
+</script>
+</body>
+</html>
